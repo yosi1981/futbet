@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Pais;
-
+use Illuminate\Http\Request;
 
 class PaisController extends Controller
 {
@@ -15,19 +14,9 @@ class PaisController extends Controller
      */
     public function index()
     {
-        $Paises=Pais::get();
+        $Paises = Pais::get();
 
         return $Paises;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //Formulario
     }
 
     /**
@@ -38,7 +27,13 @@ class PaisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required',
+        ]);
+
+        Pais::create($request->all());
+
+        return;
     }
 
     /**
@@ -60,7 +55,7 @@ class PaisController extends Controller
      */
     public function edit($id)
     {
-        $pais=Pais::findorFail($id);
+        $pais = Pais::findorFail($id);
         //Formulario
         return $pais;
     }
@@ -74,7 +69,11 @@ class PaisController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nombre' => 'required',
+        ]);
+        Pais::find($id)->update($request->all());
+        return;
     }
 
     /**
@@ -85,7 +84,7 @@ class PaisController extends Controller
      */
     public function destroy($id)
     {
-        $pais=Pais::findOrFail($id);
+        $pais = Pais::findOrFail($id);
         $pais->delete();
     }
 }
